@@ -1,0 +1,34 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.LastMatchesModel>
+<li class="dropdown tasks-menu">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="fa fa-flag-o"></i>
+        <span class="label label-warning Tahoma">10</span>
+    </a>
+    <ul class="dropdown-menu">
+        <li class="header panelTitleBg">نتیجه 10 بازی گذشته</li>
+        <li>
+            <ul class="menu">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <div class="col-xs-12 notifications-menu">
+                            <ul class="list-unstyled">
+                                <li class="notifications-menu2" dir="rtl">
+                                    @item.Tournament - @item.Group
+                                </li>
+                                <li>
+                                <li>
+                                    <div class="col-xs-8"><span class="black text-left">@item.Participantx</span></div>
+                                    <div class="col-xs-4"><span class="black text-center">@item.Goalx </span></div>
+                                    <div class="col-xs-8"><span class="black text-right">@item.ParticipantY</span></div>
+                                    <div class="col-xs-4"><span class="black text-right">@item.Goaly</span></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </li>
+    </ul>
+</li>
+                    

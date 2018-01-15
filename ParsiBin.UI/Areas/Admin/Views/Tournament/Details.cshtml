@@ -1,0 +1,74 @@
+﻿@model ParsiBin.ViewModel.AdminModel.TournamentModel
+
+@{
+    ViewBag.Title = "نمایش ";
+}
+
+<div class="container body-content">
+
+    <div class="row">
+        <div>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Logo)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Logo)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsEnabled)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsEnabled)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.IsDeleted)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.IsDeleted)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreatedOn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreatedOn)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.UpdatedOn)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UpdatedOn)
+                </dd>
+
+            </dl>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.ActionLink("ویرایش", "Edit", new { id = Model.ID }, new { @class = "btn btn-warning btn-sm btn-Md" }) 
+                @Html.ActionLink("بازگشت به لیست", "Index", null, new { @class = "btn btn-warning btn-sm btn-Md" })
+                
+                
+            </div>
+        </div>
+
+    </div>
+</div>

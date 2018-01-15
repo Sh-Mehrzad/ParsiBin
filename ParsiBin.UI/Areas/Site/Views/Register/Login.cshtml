@@ -1,0 +1,103 @@
+﻿@model ParsiBin.ViewModel.UserModel.RegisterModel
+
+@{ 
+    ViewBag.Title = "ورود به ناحیه کاربری";
+    //Layout = "~/Areas/Site/Views/Shared/_LayoutOld.cshtml";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <br /><br /><br />
+    <div class="container body-content Part2">                
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12" style="padding-top:30px;">
+                    @if (ViewBag.Message != null)
+                {     <div class="alert-danger">@ViewBag.Message</div>}
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2 black" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control text-right", @maxlength = 80, @style = "direction:ltr;" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 black" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control text-right", @type = "password", @maxlength = 14, @style = "direction:ltr;" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Captcha, htmlAttributes: new { @class = "control-label col-md-2 black te" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Captcha, new { htmlAttributes = new { @class = "form-control text-right", @maxlength = 5, @style = "direction:ltr;" } })
+                            @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                            <br />
+                            <a id="refresh" class="BigLink"><span class="glyphicon glyphicon-refresh"></span></a>
+                            <img alt="Captcha" id="imgcpatcha" src="@Url.Action("CaptchaImage","Register")" style="" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="ورود" class="btn btn-lg btn-success" />
+                            <input type="button" id="ForgotPass" value="بازیابی رمز عبور" class="btn btn-lg btn-warning" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <p class="black">رمز عبور خود را فراموش کرده‌اید؟</p>
+                    <p class="black" style="font-size:90%;">كافي است ايميل خود را وارد نموده و روي دكمه "بازيابي رمز عبور" كليك كنيد. ايميلي از طرف پارسي بين حاوي لينك بازيابي رمز عبور براي شما ارسال خواهد شد. با كليك روي لينك مذكور و طي مراحل لازم شما قادر به تعويض رمز عبور خود خواهيد بود. توجه داشته باشيد كه مهلت استفاده از لينك مذكور محدود بوده و پس از سپري شدن مهلت قابل استفاده نخواهد بود.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"><br /></div>
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"  id="myModal">
+        <div class="modal-dialog modal-sm">            
+            <div class="modal-content">
+                <p id="modalMessage" class="black"></p>
+            </div>
+        </div>
+    </div>
+}
+
+        @section scripts{
+            <script type="text/javascript">
+                $(function () {
+                    $('#refresh').click(function () {
+                        var d = new Date();
+                        $("#imgcpatcha").attr("src", "/Account/Register/CaptchaImage?" + d.getTime());
+
+                    });
+                });
+
+
+                $(document).ready(function () {
+                    $(function () {
+                        $('#ForgotPass').click(function () {
+                            $.ajax({
+                                url: 'ForgotPassword',
+                                type: 'POST',
+                                data: {
+                                    Email: document.getElementById("Email").value                                    
+                                },
+                                success: function (data) {                                    
+                                    $('#myModal').modal('show');
+                                    $('#modalMessage').html(data);
+                                },
+                                error: function (data) {
+                                    ErrorMessage();
+                                }
+                            });
+                        });
+                    })
+                })
+            </script>
+        }

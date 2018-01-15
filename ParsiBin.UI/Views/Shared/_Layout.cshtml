@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="پیش بینی رایگان مسابقات ورزشی پارسی بین" lang="fa" />
+    <meta name="keywords" content="پارسی بین, parsibin, سرگرمی, یورو 2016, euro 2016, ligue, league, لیگ, فینال, جایزه, تیم ملی,المپیک,لالیگا,لیگ برتر,لیگ جزیره, سری آ,بوندسلیگا" lang="fa" />
+    <meta name="robots" content="index, follow" />
+    <title>پارسی بین</title>
+    @Styles.Render("~/Content/css-Cust")
+    @Styles.Render("~/Content/css/font-awesome")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-79648256-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
+    
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("صفحه اصلی پارسی بین", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("ورود","Login", "Account/register")</li>
+                        <li>@Html.ActionLink("ثبت نام", "Index", "Account/register")</li>
+                        <li>@Html.ActionLink("قوانین", "Rules")</li>
+                        <li>@Html.ActionLink("نحوه بازی", "GameMethod")</li>
+                        <li>@Html.ActionLink("درباره ما", "AboutUs")</li>                       
+                    </ul>
+                    @*@Html.Partial("_LoginPartial")*@
+                </div>
+            </div>
+        </div>
+    <div class="Menu-space"></div>
+    
+    @RenderBody()
+    @*<hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
+    <div class="footer">
+        <div class="container">
+            <div class="infooter">
+                <p class="copyright">Copyright &copy;  ParsiBin @DateTime.Now.Year by <a class="credit" href="http://www.ParsiBin.com">ParsiBin Team</a> </p>
+            </div>
+            
+            <ul class="socialmedia">
+                <li><a href="https://plus.google.com/u/0/102171572059916791332"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                <li><a href="https://telegram.me/parsibin"><i class="fa fa-paper-plane"></i></a></li>
+                <li><a href="https://ir.linkedin.com/in/shaahin-mehrzad-03197a108"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="http://instagram.com/parsibin/"><i class="fa fa-instagram" title="instagram"></i></a></li>
+            </ul>
+        </div>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    
+</body>
+</html>

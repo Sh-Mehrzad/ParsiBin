@@ -1,0 +1,14 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.UserPointStatusModel>
+
+@foreach (var item in Model)
+{
+    <li class="FutureMatches text-right">
+        <a href="@Url.Action("Top10/" + item.TournamentID, "ClientArea", new { Controller = "ClientArea" }  )">
+            <div class="row">
+                <div class="col-xs-12">
+                    @item.Tournament <i class="fa fa-circle"></i>
+                </div>
+            </div>
+        </a>
+    </li>
+}

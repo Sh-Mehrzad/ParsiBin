@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.AdminModel.GroupModel>
+
+@{
+    ViewBag.Title = "گروه‌های  " + @ViewBag.TournamentTitle;
+}
+<div class="container body-content">
+
+    <div class="row">
+        
+
+        <p>
+            <a class="btn btn-info btn-sm" href="/Admin/Group/Create?TournamentID=@Request.QueryString["TournamentID"]">ایجاد گروه جدید</a>
+            @Html.ActionLink("بازگشت به لیست تورنومنت‌ها", "TournamentList", "Tournament",null, new { @class = "btn btn-warning btn-sm" })
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SportTypeTitle)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ParticipantTypeID)
+                </th>
+                <th>
+                    بازی‌های فعال 
+                </th>
+                <th>
+                    پایان یافته
+                </th>
+                <th>
+                    در حال برگزاری
+                </th>
+                <th>
+                    تیم‌ها
+                </th>
+                <th>
+                    بازی‌ها
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SportTypeTitle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParticipantType)
+                    </td>
+                    <td>
+                        <span class="label label-success text-center">@Html.DisplayFor(modelItem => item.ActiveMatch)</span>
+                    </td>
+                    <td>
+                        <span class="label label-warning text-center">@Html.DisplayFor(modelItem => item.FinishMatch)</span>
+                    </td>
+                    <td>
+                        <span class="label label-danger text-center">@Html.DisplayFor(modelItem => item.InProgressMatch)</span>
+                    </td>
+                    <td>
+                        <a href="~/Admin/Group/PartList?GroupID=@item.ID" class="btn btn-primary">تیم‌ها</a>
+                    </td>
+                    <td>
+                        <a href="~/Admin/Match/Index?GroupID=@item.ID" class="btn btn-primary">بازی‌ها</a>
+                    </td>
+                    
+                    <td>
+                        @Html.ActionLink("ویرایش", "Edit", new { id = item.ID }) |                        
+                        @Html.ActionLink("حذف", "Delete", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+    </div>

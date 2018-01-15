@@ -1,0 +1,42 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.Prediction.ComingMatchModel>
+
+@{
+    ViewBag.Title = "بازی های پیش رو";
+    Layout = "~/Areas/Site/Views/Shared/_Layout.cshtml";
+}
+
+<div class="Part2">
+    @foreach (var item in Model)
+    {
+        if (item.MatchList.Count > 0)
+        {
+            <div class="MatchDiv row">
+                <div class="col-md-1"><img alt="@Html.DisplayFor(modelItem => item.TournamentTitle)" src="@Url.Content("http://www.parsibin.com/Handlers/ImageHandler/ImageHandler.ashx?h=60&w=60&file=" + "~/Uploads/tournament/" + @Html.DisplayFor(modelItem => item.TournamentLogo))" class="img-responsive" xstyle="border: 2px solid #b3c5d0;" title="@Html.DisplayFor(modelItem => item.TournamentTitle)"></div>
+                <div class="col-md-11"><h4> @item.TournamentTitle</h4> <h5>@item.MatchList.Select(x => x.GroupTitle).FirstOrDefault()</h5>       </div>
+            </div>            
+            <div class="MatchDiv row">
+                <div class="col-md-7">
+                    @foreach (var subItem in item.MatchList)
+                    {
+                        <div class="col-md-6">
+                            <table style="width:100%; margin:5px; border:solid 1px #ededed">
+                                <tr>
+                                    <td style="width:20%"><img alt="@Html.DisplayFor(modelItem => subItem.HomeTeam)" src="@Url.Content("http://www.ParsiBin.com/Uploads/Participant/" + @Html.DisplayFor(modelItem => subItem.HomeLogo))" title="@Html.DisplayFor(modelItem => subItem.HomeTeam)" class="Logo2821"></td>
+                                    <td style="width:50%">@subItem.HomeTeam</td>
+                                    <td style="width:30%" rowspan="2">ساعت <br />@subItem.PersianTime</td>
+                                </tr>
+                                <tr>
+                                    <td><img alt="@Html.DisplayFor(modelItem => subItem.AwayTeam)" src="@Url.Content("http://www.ParsiBin.com/Uploads/Participant/" + @Html.DisplayFor(modelItem => subItem.AwayLogo))" title="@Html.DisplayFor(modelItem => subItem.AwayTeam)" class="Logo2821"></td>
+                                    <td>@subItem.AwayTeam</td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                </div>
+                <div class="col-md-5"></div>
+            </div>
+            <hr />
+        }
+
+    }
+</div>

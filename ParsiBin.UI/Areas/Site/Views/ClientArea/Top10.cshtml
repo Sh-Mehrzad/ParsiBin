@@ -1,0 +1,72 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.UserRankingModel>
+@{
+    ViewBag.Title = "جدول امتیازات 10 نفر برتر " + ViewBag.TournamentName;
+}
+
+<a href="#predict">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-futbol-o "></i></span>
+            <span class="info-box-number text-right">@ViewBag.TournamentName</span>
+            <span class="info-box-text text-right">امتیاز : @ViewBag.Point</span>
+            <span class="info-box-text text-right">رتبه : @ViewBag.Rank</span>
+        </div>
+    </div>
+</a>
+
+<div class="Part2">
+    <div>
+        @{ if (ViewBag.status == "false")
+            {
+                <div>
+                    <div class="col-xs-12 col-sm-12 text-center panelTitleBg">
+                        <h2 class="white text-center">لینک مورد نظر یافت نشد.</h2>
+
+
+                    </div>
+                </div>
+            }
+            else {
+                <div class="MatchDiv row">
+
+                    <table class="table table-bordered">
+                        <tr class="bgYellow">
+                            <th><h4 style="padding-right:10px;">رتبه</h4></th>
+                            <th><h4 style="padding-right:10px;">امتیاز</h4></th>
+                            @if (ViewBag.Admin == "Admin")
+                            {
+                            <th><h4 style="padding-right:10px;">ایمیل</h4></th>
+                            }
+                        </tr>
+                        @{foreach (var item in Model)
+                            {
+                                if (item.Rank < 4)
+                                {
+                        <tr class="bgGreen">
+                            <td class="white"><h4 style="padding-right:10px;">@item.Rank</h4></td>
+                            <td class="white"><h4 style="padding-right:10px;">@String.Format("{0:0.00}", item.Point)</h4></td>
+                            @if (ViewBag.Admin == "Admin")
+                                        {
+                                        <th><h5 class="text-left white Tahoma">@item.Email</h5></th>
+                                        }
+                        </tr>
+                                }
+                                else {
+                        <tr class="bgBlue">
+                            <td class="white"><h4 style="padding-right:10px;">@item.Rank</h4></td>
+                            <td class="white"><h4 style="padding-right:10px;">@String.Format("{0:0.00}", item.Point)</h4></td>
+                            @if (ViewBag.Admin == "Admin")
+                                        {
+                                        <th><h5 class="text-left white Tahoma">@item.Email</h5></th>
+                                        }
+                        </tr>
+                                }
+                            }
+                        }
+                    </table>
+
+                </div>
+                            }
+        }
+    </div>
+</div>

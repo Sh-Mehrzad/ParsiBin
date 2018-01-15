@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.UserPointStatusModel>
+
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-line-chart"></i> <span class="text-right">امتیاز من</span>  <i class="fa fa-angle-right pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="#">
+                    <div class="row">
+                        <div class="col-xs-10 text-right">
+                            @item.Tournament
+                        </div>
+                        <div class="col-xs-2">
+                            <span class="label label-info text-left Tahoma">@item.Point</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+
+</li>
+<li>
+    <a href="#">
+        <i class="fa fa-cubes"></i> <span class="text-right">رتبه من</span>
+        @*<small class="label pull-right bg-green">new</small>*@
+        <i class="fa fa-angle-right pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        @foreach (var item in Model)
+        {
+            <li>
+                <a href="#">
+                    <div class="row">
+                        <div class="col-xs-10 text-right">
+                            @item.Tournament
+                        </div>
+                        <div class="col-xs-2">
+                            <span class="label label-warning text-left Tahoma">@item.Rank</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</li>

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پارسی بین</title>
+    @Styles.Render("~/Content/css-Cust")
+    @Styles.Render("~/Content/css/font-awesome")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", false)
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-79648256-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @{
+                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                    {
+                        @Html.ActionLink("صفحه اصلی پارسی بین", "index",null, new { @class = "navbar-brand" })
+                        @*@Html.ActionLink("صفحه اصلی پارسی بین", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                    }
+                    else
+                    {
+                        @Html.ActionLink("صفحه اصلی پارسی بین", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                }
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @{
+                        if (!string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            <li>@Html.ActionLink("لیست 10 نفر برتر", "Top10")</li>
+                            <li>@Html.ActionLink("لیست سوابق شما", "History")</li>
+                            <li>@Html.ActionLink("قوانین", "Rules", "../Home")</li>
+                            <li>@Html.ActionLink("نحوه بازی", "GameMethod", "../Home")</li>
+                            <li>@Html.ActionLink("درباره ما", "AboutUs", "../Home")</li>
+
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("ورود", "Login", "register")</li>
+                            <li>@Html.ActionLink("ثبت نام", "Index", "register")</li>
+                            <li>@Html.ActionLink("قوانین", "Rules", "../Home")</li>
+                            <li>@Html.ActionLink("نحوه بازی", "GameMethod", "../Home")</li>
+                            <li>@Html.ActionLink("درباره ما", "AboutUs", "../Home")</li>
+                        }
+                    }
+
+                </ul>
+                @*@Html.Partial("_LoginPartial")*@
+            </div>
+        </div>
+    </div>
+    <div class="Menu-space"></div>
+    <div class="container body-content">
+        <div class="form-horizontal">
+            <div class="row">
+                <div class="col-lg-7 col-md-9 col-sm-12">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4">
+                        <a href="http://www.parsibin.com"><img alt="پارسی بین" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=134&w=220&file=" + "~/Content/img/parsibinfarsi.png")" class="img-responsive pull-right" title="پارسی بین"></a>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-8">
+                        <h1 class="white">@ViewBag.Title</h1>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-3 col-sm-12 text-left">
+                    <div class="row" style="padding-top:20px;">
+                        <p></p>
+
+                        <p class="black text-left">
+                            تاریخ امروز : @Html.Action("GetShamsiDate", "Time", new { area = "" }) @*<span class="glyphicon glyphicon-calendar white" style="font-size:1.5em;"></span>*@
+                            <div class="btn-group">
+                                @{
+                                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                                    {
+                                        @Html.ActionLink(User.Identity.Name.ToLower(), "Index", "ClientArea", new { @class = "btn btn-info BigLink", @style = "font-family:Tahoma;" });@*<span class="glyphicon glyphicon-user white text-left" style="font-size:1.5em;"></span>*@
+
+                                    }
+
+
+                                    if (!string.IsNullOrEmpty(User.Identity.Name))
+                                    {
+                                        @Html.ActionLink("خروج", "SignOut", "ClientArea", new { @class = "btn btn-default BigLink", @style = "margin-left:5px;" });
+                                        @*<span class="glyphicon glyphicon-off white media-middle" style="font-size:1.5em;"></span>*@
+                                    }
+                                }
+                            </div>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="WaitingMessage" style="width: 100%; height: 100%; position: fixed; z-index:1000; top: 0; right: 0; bottom:0; left:0; background-color:rgba(70,150,130,0.93);">
+        <h3 class="white text-center" style="padding-top:20%;">در حال لود صفحه ...<br /><br />لطفا صبر کنید</h3>
+    </div>
+
+    @if (!string.IsNullOrEmpty(User.Identity.Name))
+    {
+        <div class="Part1">
+            <div class="form-horizontal container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="ScoreBox text-center bgRed" onclick="location.href='@Url.Action("Index")'">
+
+                            <div class="col-xs-8 col-sm-8">
+                                <h3>@Html.ActionLink("صفحه اصلی", "index")</h3>
+                            </div>
+                            <div class="col-xs-4 Icon">
+                                <i class="fa fa-home"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="ScoreBox Center text-center bgGreen">
+                            <div class="col-xs-8 col-sm-8 white">
+                                <h3>امتیاز شما</h3><br /><h2 class="Center ScoreText">@ViewBag.UserPoint</h2>
+                            </div>
+                            <div class="col-xs-4 Icon">
+                                <i class="fa fa-bar-chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="ScoreBox Center text-center bgBlue">
+                            <div class="col-xs-8 col-sm-8 white">
+                                <h3> رتـبـه شما</h3><br /><h2 class="Center ScoreText">@ViewBag.UserRank</h2>
+                            </div>
+                            <div class="col-xs-4 Icon">
+                                <i class="fa fa-line-chart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-lg-4 col-md-4 col-xs-12 col-lg-offset-2 col-md-offset-2">
+                        <div class="ScoreBox Center text-center bgPurple" onclick="location.href='@Url.Action("Top10")'">
+                            <div class="col-xs-8 col-sm-8">
+                                <h3>@Html.ActionLink("لیست 10 نفر برتر", "Top10")</h3>
+                            </div>
+                            <div class="col-xs-4 Icon">
+                                <i class="fa fa-list-ol"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <div class="ScoreBox Center text-center bgYellow" onclick="location.href='@Url.Action("History")'">
+                            <div class="col-xs-8  col-sm-8">
+                                <h3>@Html.ActionLink("لیست سوابق شما", "History")</h3>
+                            </div>
+                            <div class="col-xs-4 Icon">
+                                <i class="fa fa-eye"></i>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    }
+
+    @RenderBody()
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $('#WaitingMessage').fadeOut();
+    </script>
+</body>
+</html>

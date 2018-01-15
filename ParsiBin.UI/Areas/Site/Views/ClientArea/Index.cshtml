@@ -1,0 +1,300 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.UserPointStatusModel>
+
+@{
+    ViewBag.Title = "ناحیه کاربری";
+    int counter = 0;
+    string divclass = "bg-yellow";
+}
+
+@foreach (var item in Model)
+{
+    counter += 1;
+    switch (counter)
+    {
+        case 1:
+            divclass = "bg-aqua";
+            break;
+        case 2:
+            divclass = "bg-red";
+            break;
+        case 3:
+            divclass = "bg-green";
+            break;
+        case 4:
+            divclass = "bg-yellow";
+            counter = 0;
+            break;
+    }
+    <a href="@Url.Action("Predict/" + item.TournamentID, "ClientArea", new { Controller = "ClientArea" }  )">
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon @divclass"><i class="fa fa-futbol-o "></i></span>
+                <span class="info-box-number text-right">@item.Tournament</span>
+                <span class="info-box-text text-right">امتیاز : @item.Point</span>
+                <span class="info-box-text text-right">رتبه : @item.Rank</span>
+            </div>
+        </div>
+    </a>
+    if (counter == 2)
+    {
+        <div class="clearfix visible-sm-block"></div>
+    }
+}
+
+<div>
+    <div class="col-xs-12 col-sm-12 text-center panelTitleBg alert alert-danger  alert-dismissible fade in">
+        @*<button type="button" class="close pull-right" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" class="white" >&times;</span>
+            </button>*@
+
+        <h2 class="white text-center"><span class="fa fa-info-circle media-middle "></span>
+توجه
+
+        </h2>
+        <p class="white text-center">
+                    نظر به اینکه هر سری از مسابقات دارای امتیاز و رتبه خاص خود می باشد، جهت پیش بینی به صفحه مسابقات مورد نظر مراجعه نمایید.
+            <br />        لینک های هر مسابقه در  بالای همین صفحه و در منوی سمت چپ در دسترس می باشد.
+               
+        </p>
+
+    </div>
+</div>
+
+<div class="Part2">
+    <div>
+
+        @*@foreach (var item in Model)
+            {
+                <div class="row">
+                    <div class="MatchDiv row">
+                        <div class="col-xs-12 col-lg-12">
+                            <div class="row panelMargin">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading panelTitleBg" role="tab" id="heading">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(modelItem => item.ID)" aria-expanded="true" aria-controls="collapseOne">
+                                                    <span class="glyphicon glyphicon-chevron-down pull-left"></span>
+                                                    @Html.DisplayFor(modelItem => item.GroupTitle) - @Html.DisplayFor(modelItem => item.PersianDate)
+                                                </a>
+
+
+                                            </h4>
+                                        </div>
+                                        <div id="@Html.DisplayFor(modelItem => item.ID)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading@Html.DisplayFor(modelItem => item.ID)">
+                                            <div class="panel-body">
+                                                <div class="row hidden-xs text-center">
+                                                    <div class="col-sm-2"><div class="TimeCircle"><h4>ساعت</h4><h5>@Html.DisplayFor(modelItem => item.PersianTime)</h5></div></div>
+
+                                                    <div class="col-sm-3 text-left"><h4>تیم میزبان</h4><br /><h5 style="margin-top:12px;">@Html.DisplayFor(modelItem => item.HomeTeam) <img alt="@Html.DisplayFor(modelItem => item.HomeTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.HomeLogo))" class="img-circle" style="border: 2px solid #b3c5d0;" title="@Html.DisplayFor(modelItem => item.HomeTeam)"></h5></div>
+                                                    <div class="col-sm-2"><h4 style="margin-top:80px;">-</h4></div>
+                                                    <div class="col-sm-5" style="text-align:right;"><h4>تیم میهمان</h4><br /><h5 style="margin-top:12px;"><img alt="@Html.DisplayFor(modelItem => item.AwayTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.AwayLogo))" class="img-circle" style="border: 2px solid #b3c5d0;" title="@Html.DisplayFor(modelItem => item.AwayTeam)">   @Html.DisplayFor(modelItem => item.AwayTeam) </h5></div>
+                                                </div>
+                                                <div class="row hidden-md hidden-lg hidden-sm text-center">
+                                                    <div class="row">
+                                                        <div class="col-xs-12"><div class="TimeCircle Center"><h4>ساعت</h4><h5>@Html.DisplayFor(modelItem => item.PersianTime)</h5></div></div>
+                                                    </div>
+                                                    <div class="row" style="background-color:#fff1a6;margin-top:5px;">
+                                                        <div class="col-xs-8"><h4 style="margin-top:18px; text-align:right;">میزبان : @Html.DisplayFor(modelItem => item.HomeTeam)</h4></div>
+                                                        <div class="col-xs-4"><h5> <img alt="@Html.DisplayFor(modelItem => item.HomeTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.HomeLogo))" class="img-circle" style="border: 2px solid #b3c5d0;margin-top:12px;" title="@Html.DisplayFor(modelItem => item.HomeTeam)"></h5></div>
+                                                    </div>
+                                                    <div class="row" style="background-color:#fff1a6;margin-top:5px;">
+                                                        <div class="col-xs-8"><h4 style="margin-top:18px; text-align:right;">میهمان : @Html.DisplayFor(modelItem => item.AwayTeam)</h4></div>
+                                                        <div class="col-xs-4"><h5> <img alt="@Html.DisplayFor(modelItem => item.AwayTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.AwayLogo))" class="img-circle" style="border: 2px solid #b3c5d0;margin-top:12px;" title="@Html.DisplayFor(modelItem => item.AwayTeam)"></h5></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <fieldset>
+                                                <div class="form-horizontal">
+                                                    <div class="container text-center Center" style="padding-top:20px; padding-bottom:20px;">
+                                                        <div data-toggle="buttons">
+
+                                                            @if (@item.ScoreTitleID == 1)
+                                                            {
+                                                                <label class="btn btn-success ScoreList active">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" disabled="disabled" id="@Html.DisplayFor(modelItem => item.ID)/1/@Html.DisplayFor(modelItem => item.HScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.HScore)"> برد @Html.DisplayFor(modelItem => item.HomeTeam) (@Html.DisplayFor(modelItem => item.HScore))
+                                                                </label>
+                                                            }
+                                                            else {
+                                                                <label class="btn btn-success ScoreList">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" disabled="disabled" id="@Html.DisplayFor(modelItem => item.ID)/1/@Html.DisplayFor(modelItem => item.HScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.HScore)"> برد @Html.DisplayFor(modelItem => item.HomeTeam) (@Html.DisplayFor(modelItem => item.HScore))
+                                                                </label>
+                                                            }
+
+                                                            @if (@item.ScoreTitleID == 2)
+                                                            {
+                                                                <label class="btn btn-success ScoreList active">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/2/@Html.DisplayFor(modelItem => item.XScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.XScore)"> مساوی (@Html.DisplayFor(modelItem => item.XScore))
+                                                                </label>
+                                                            }
+                                                            else {
+                                                                <label class="btn btn-success ScoreList">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/2/@Html.DisplayFor(modelItem => item.XScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.XScore)"> مساوی (@Html.DisplayFor(modelItem => item.XScore))
+                                                                </label>
+                                                            }
+
+                                                            @if (@item.ScoreTitleID == 3)
+                                                            {
+                                                                <label class="btn btn-success ScoreList active">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/3/@Html.DisplayFor(modelItem => item.AScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.AScore)"> برد @Html.DisplayFor(modelItem => item.AwayTeam) (@Html.DisplayFor(modelItem => item.AScore))
+                                                                </label>
+                                                            }
+                                                            else {
+                                                                <label class="btn btn-success ScoreList">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/3/@Html.DisplayFor(modelItem => item.AScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.AScore)"> برد @Html.DisplayFor(modelItem => item.AwayTeam) (@Html.DisplayFor(modelItem => item.AScore))
+                                                                </label>
+                                                            }
+
+                                                            @if (@item.ScoreTitleID == 4)
+                                                            {
+                                                                <label class="btn btn-success ScoreList active">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/4/@Html.DisplayFor(modelItem => item.HXScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.HXScore)"> برد مساوی @Html.DisplayFor(modelItem => item.HomeTeam) (@Html.DisplayFor(modelItem => item.HXScore))
+                                                                </label>
+                                                            }
+                                                            else {
+                                                                <label class="btn btn-success ScoreList">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/4/@Html.DisplayFor(modelItem => item.HXScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.HXScore)"> برد مساوی @Html.DisplayFor(modelItem => item.HomeTeam) (@Html.DisplayFor(modelItem => item.HXScore))
+                                                                </label>
+                                                            }
+
+                                                            @if (@item.ScoreTitleID == 5)
+                                                            {
+                                                                <label class="btn btn-success ScoreList active">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/5/@Html.DisplayFor(modelItem => item.AXScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.AXScore)"> برد مساوی @Html.DisplayFor(modelItem => item.AwayTeam) (@Html.DisplayFor(modelItem => item.AXScore))
+                                                                </label>
+                                                            }
+                                                            else {
+                                                                <label class="btn btn-success ScoreList">
+                                                                    <input type="radio" name="@Html.DisplayFor(modelItem => item.ID)" class="selectScore" id="@Html.DisplayFor(modelItem => item.ID)/5/@Html.DisplayFor(modelItem => item.AXScore)" autocomplete="off" value="@Html.DisplayFor(modelItem => item.AXScore)"> برد مساوی @Html.DisplayFor(modelItem => item.AwayTeam) (@Html.DisplayFor(modelItem => item.AXScore))
+                                                                </label>
+                                                            }
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }*@
+    </div>
+</div>
+
+<div id="foo" style="width: 100%; height: 100%; position: fixed;display:none; z-index:1000; top: 0; right: 0; bottom:0; left:0; background-color:rgba(70,150,130,0.93);">
+    <h3 id="WaitMessage" class="white text-center" style="padding-top:20%;display: none;">در حال ثبت اطلاعات ...<br /><br />لطفا صبر کنید</h3>
+    <h3 id="SuccessMessage" class="white text-center" style="padding-top:20%; display: none;">اطلاعات با موفقیت ثبت شد</h3>
+    <h3 id="Problem" class="white text-center" style="padding-top:20%; display: none;">مشکلی در ثبت اطلاعات رخ داد<br /><br />لطفا مجددا ارسال کنید</h3>
+    <h3 id="UnAuthorize" class="white text-center" style="padding-top:20%; display: none;">به نظر زمان زیادی از برنامه استفاده نکرده اید.<br /><br />لطفا مجددا مشخصات کاربری خود را وارد کنید</h3>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            HideDiv();
+            $(function () {
+                $(':radio[class="selectScore"]').change(function () {
+                    ShowDiv();
+                    var val = this.id.split("/");
+                    $.ajax({
+                        url: '@Url.Action("AddPredict", "Prediction")',
+                        type: 'POST',
+                        data: {
+                            MatchID: val[0],
+                            STID: val[1],
+                            Score: val[2]
+                        },
+                        success: function (data) {
+                            if (data == 'True') {
+                                ChangeMessage();
+                            }
+                            else if (data == 'UnAuthorize') {
+                                HideDiv();
+                                UnAuthorize();
+                                location.reload();
+                            }
+                            else {
+                                $.ajax({
+                                    url: '@Url.Action("PredictLog")',
+                                    type: 'POST',
+                                    data: {
+                                        MatchID: val[0],
+                                        ScoreTitleID: val[1],
+                                        Score: val[2],
+                                        Status: false
+                                    }
+                                });
+                                ErrorMessage();
+                            }
+                        },
+                        error: function (data) {
+
+                            $.ajax({
+                                url: '@Url.Action("PredictLog")',
+                                type: 'POST',
+                                data: {
+                                    MatchID: val[0],
+                                    UserID: '@ViewBag.UsrID',
+                                    ScoreTitleID: val[1],
+                                    Score: val[2],
+                                    Status: false
+                                }
+                            });
+                            ErrorMessage();
+                        }
+                    });
+                });
+            })
+        })
+
+
+
+        function ErrorMessage() {
+            document.getElementById("WaitMessage").style.display = "none";
+            document.getElementById("SuccessMessage").style.display = "none";
+            document.getElementById("Problem").style.display = "block";
+            setTimeout(function () {
+                $('#foo').fadeOut('slow');
+            }, 1000);
+        }
+
+        function UnAuthorize() {
+            document.getElementById("UnAuthorize").style.display = "block";
+            setTimeout(function () {
+                $('#foo').fadeOut('slow');
+            }, 2000);
+        }
+
+        function ShowDiv() {
+            document.getElementById("SuccessMessage").style.display = "none";
+            document.getElementById("WaitMessage").style.display = "block";
+            document.getElementById("foo").style.display = "block";
+        }
+        function HideDiv() {
+            document.getElementById("foo").style.display = "none";
+            document.getElementById("SuccessMessage").style.display = "none";
+            document.getElementById("WaitMessage").style.display = "none";
+            document.getElementById("UnAuthorize").style.display = "none";
+        }
+
+        function ChangeMessage() {
+            document.getElementById("WaitMessage").style.display = "none";
+            document.getElementById("Problem").style.display = "none";
+            document.getElementById("SuccessMessage").style.display = "block";
+            setTimeout(function () {
+                $('#foo').fadeOut('slow');
+            }, 1000);
+            //HideDiv();
+        }
+
+        $(function openNav() {
+            $('#foo').toggleClass('fullscreen');
+        });
+
+
+    </script>
+}

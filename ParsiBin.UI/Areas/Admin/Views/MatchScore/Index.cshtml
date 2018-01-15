@@ -1,0 +1,128 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.AdminModel.MatchScoreModel>
+
+@{
+    ViewBag.Title = "ضرایب";
+}
+
+<div class="container body-content">
+    <div class="row">
+        <h3>تورنومنت : @ViewBag.TournamentTitle</h3>
+        <h3>گروه : @ViewBag.Group</h3>
+        <h4>تیم میزبان : @ViewBag.HomeTeam</h4>
+        <h4>تیم میهمان : @ViewBag.AwayTeam</h4>
+
+        @using (Html.BeginForm())
+        {
+            int i = 1;
+            string txtName = "";
+            if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    switch (i)
+                    {
+                        case 1:
+                            item.ScoreTitle = "برد " + ViewBag.HomeTeam + ":";
+                            txtName = "HomeWin";
+                            break;
+                        case 2:
+                            item.ScoreTitle = "تساوی " + ":";
+                            txtName = "Draws";
+                            break;
+                        case 3:
+                            item.ScoreTitle = "برد " + ViewBag.Awayteam + ":";
+                            txtName = "AwayWin";
+                            break;
+                        case 4:
+                            item.ScoreTitle = "برد مساوی " + ViewBag.HomeTeam + ":";
+                            txtName = "HomeWinOrDraws";
+                            break;
+                        case 5:
+                            item.ScoreTitle = "برد مساوی " + ViewBag.Awayteam + ":";
+                            txtName = "AwayWinOrDraws";
+                            break;
+                    }
+                    <div class="form-horizontal">
+
+                        <hr />
+                        <div class="form-group">
+
+                            <label class="control-label col-md-2" for="Title"> @item.ScoreTitle</label>
+                            <div class="col-md-10">
+                                <input class="form-control text-box single-line" data-val="true" id="@txtName" name="@txtName" type="text" value="@item.Score">
+                            </div>
+                        </div>
+                    </div>
+                    i += 1;
+                }
+            }
+            else
+            {
+                <div class="form-horizontal">
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Title">برد @ViewBag.HomeTeam :</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" id="HomeWin" name="HomeWin" type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Title">تساوی دو تیم :</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" id="Draws" name="Draws" type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Title">برد  @ViewBag.AwayTeam :</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" id="AwayWin" name="AwayWin" type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Title">برد مساوی @ViewBag.HomeTeam :</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" id="HomeWinOrDraws" name="HomeWinOrDraws" type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    <div class="form-group">
+                        <label class="control-label col-md-2" for="Title">برد مساوی @ViewBag.AwayTeam :</label>
+                        <div class="col-md-10">
+                            <input class="form-control text-box single-line" data-val="true" id="AwayWinOrDraws" name="AwayWinOrDraws" type="text" value="0">
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="ذخیره" class="btn btn-primary" />
+
+                    <a href="~/admin/Match/Index?GroupID=@ViewBag.GroupID" class="btn btn-primary">بازگشت</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

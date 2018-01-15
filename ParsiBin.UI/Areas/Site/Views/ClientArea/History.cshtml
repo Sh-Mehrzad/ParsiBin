@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.UserModel.UserPredictionHistoryModel>
+
+@{
+    ViewBag.Title = "سوابق بازی‌های انجام شده" + ViewBag.Tournament;
+}
+
+<a href="#predict">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-futbol-o "></i></span>
+            <span class="info-box-number text-right">@ViewBag.TournamentName</span>
+            <span class="info-box-text text-right">امتیاز : @ViewBag.Point</span>
+            <span class="info-box-text text-right">رتبه : @ViewBag.Rank</span>
+        </div>
+    </div>
+</a>
+
+
+
+<div class="Part2">
+    <div>
+        @{ if (ViewBag.status != "false")
+            {
+                foreach (var item in Model)
+                {
+                    <div class="row">
+                        <div class="MatchDiv row">
+                            <div class="col-xs-12 col-lg-12">
+                                <div class="row panelMargin">
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading panelTitleBg" role="tab" id="heading">
+                                                <h4 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#@Html.DisplayFor(modelItem => item.MatchID)" aria-expanded="true" aria-controls="collapseOne">
+                                                        <span class="glyphicon glyphicon-chevron-down pull-left"></span>
+                                                        @Html.DisplayFor(modelItem => item.GroupName) - @Html.DisplayFor(modelItem => item.PersianDate)
+                                                    </a>
+
+
+                                                </h4>
+                                            </div>
+                                            <div id="@Html.DisplayFor(modelItem => item.MatchID)" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading@Html.DisplayFor(modelItem => item.ID)">
+                                                <div class="panel-body">
+                                                    <div class="row hidden-xs text-center">
+                                                        <div class="col-sm-2"><div class="TimeCircle animate slideInDown"><h4>ساعت</h4><h5>@Html.DisplayFor(modelItem => item.PersianTime)</h5></div></div>
+
+                                                        <div class="col-sm-3 text-left"><h4>تیم میزبان</h4><br /><h5 style="margin-top:12px;">@Html.DisplayFor(modelItem => item.HomeTeam) <img alt="@Html.DisplayFor(modelItem => item.HomeTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.HomeLogo))" class="img-circle" style="border: 2px solid #b3c5d0;" title="@Html.DisplayFor(modelItem => item.HomeTeam)"></h5></div>
+                                                        <div class="col-sm-2"><h4 style="margin-top:80px;">@Html.DisplayFor(modelItem => item.HomeTeamGoal) - @Html.DisplayFor(modelItem => item.AwayTeamGoal)</h4></div>
+                                                        <div class="col-sm-3" style="text-align:right;"><h4>تیم میهمان</h4><br /><h5 style="margin-top:12px;"><img alt="@Html.DisplayFor(modelItem => item.AwayTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.AwayLogo))" class="img-circle" style="border: 2px solid #b3c5d0;" title="@Html.DisplayFor(modelItem => item.AwayTeam)">   @Html.DisplayFor(modelItem => item.AwayTeam) </h5></div>
+
+                                                        <div class="col-sm-2"><div class="TimeCircle"><h4>امتیاز</h4><h5>@Html.DisplayFor(modelItem => item.Score)</h5></div></div>
+                                                    </div>
+                                                    <div class="row hidden-md hidden-lg hidden-sm text-center">
+                                                        <div class="row">
+                                                            <div class="col-xs-6"><div class="TimeCircle Center"><h4>ساعت</h4><h5>@Html.DisplayFor(modelItem => item.PersianTime)</h5></div></div>
+                                                            <div class="col-xs-6"><div class="TimeCircle Center"><h4>امتیاز</h4><h5>@Html.DisplayFor(modelItem => item.Score)</h5></div></div>
+                                                        </div>
+                                                        <div class="row ParticipantTitle">
+                                                            <div class="col-xs-8"><h4 style="margin-top:18px; text-align:right;">میزبان : @Html.DisplayFor(modelItem => item.HomeTeam) ( @Html.DisplayFor(modelItem => item.HomeTeamGoal) )</h4></div>
+                                                            <div class="col-xs-4"><h5> <img alt="@Html.DisplayFor(modelItem => item.HomeTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.HomeLogo))" class="img-circle" style="border: 2px solid #b3c5d0;margin-top:12px;" title="@Html.DisplayFor(modelItem => item.HomeTeam)"></h5></div>
+                                                        </div>
+                                                        <div class="row ParticipantTitle">
+                                                            <div class="col-xs-8"><h4 style="margin-top:18px; text-align:right;">میهمان : @Html.DisplayFor(modelItem => item.AwayTeam) ( @Html.DisplayFor(modelItem => item.AwayTeamGoal) )</h4></div>
+                                                            <div class="col-xs-4"><h5> <img alt="@Html.DisplayFor(modelItem => item.AwayTeam)" src="@Url.Content("~/Handlers/ImageHandler/ImageHandler.ashx?h=45&w=45&file=" + "~/Uploads/Participant/" + @Html.DisplayFor(modelItem => item.AwayLogo))" class="img-circle" style="border: 2px solid #b3c5d0;margin-top:12px;" title="@Html.DisplayFor(modelItem => item.AwayTeam)"></h5></div>
+                                                        </div>
+                                                    </div>
+                                                    <div style="padding-top:20px;"><h3>پیش‌بینی شما : @Html.DisplayFor(modelItem => item.UserPredictScoreTitle)</h3></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>

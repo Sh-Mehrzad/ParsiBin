@@ -1,0 +1,108 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.AdminModel.ParticipantModel>
+
+@{
+    ViewBag.Title = "لیست تیم ها";
+}
+
+<div class="container body-content">
+    <div class="row">
+
+
+        @if (ViewBag.Message != null)
+        {     <div class="alert-danger">@ViewBag.Message</div>}
+        @if (ViewBag.Status == true)
+        { <div class="alert-success">اطلاعات با موفقیت ذخیره شد</div>}
+
+
+        <h3 class="white">تورنومنت : @ViewBag.TourTitle</h3>
+        <h3>گروه : @ViewBag.GroupTitle</h3>
+
+        <hr />
+
+        @using (Html.BeginForm())
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading">لیست تیم‌ها</div>
+                <div class="panel-heading">
+                    <table class="table">
+                        <tr>
+                            <th style="width:50%;">@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>وضعیت</th>
+                        </tr>
+                        @foreach (var item in Model)
+                {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @if (item.IsEnabled == true)
+                                    {
+                                        <span class="btn btn-primary btn-sm" name="PartEnable" id="@item.ID/@Request.QueryString["GroupID"]">موجود</span>
+                                    }
+                                    else
+                                    {
+                                        <span href="#" name="PartEnable" id="@item.ID/@Request.QueryString["GroupID"]" class="btn btn-warning btn-sm">ناموجود</span>
+                                    }
+
+                                </td>
+                            </tr>
+                        }                        
+
+                    </table>
+
+                </div>
+            </div>            
+        }
+        
+        <div>
+            <a href="/Admin/Group?TournamentID=@ViewBag.TournamID">بازگشت به لیست گروه‌ها</a>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(function () {
+                $('span[name="PartEnable"]').click(function () {
+                    var val = this.id.split("/");
+                    var btn = $(this);
+
+                    if (btn.hasClass('btn-primary')) {
+                        $.ajax({
+                            url: '@Url.Action("RemoveParticipant", "Group")',
+                            type: 'POST',
+                            data: {
+                                ParticipantID: val[0],
+                                GroupID: val[1]
+                            },
+                            success: function () {
+                                btn.removeClass('btn-primary');
+                                btn.addClass('btn-warning');
+                                btn.text('غیرفعال');
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            url: '@Url.Action("AddParticipant", "Group")',
+                            type: 'POST',
+                            data: {
+                                ParticipantID: val[0],
+                                GroupID: val[1]
+                            },
+                            success: function () {
+                                btn.addClass('btn-primary');
+                                btn.removeClass('btn-warning');
+                                btn.text('فعال');
+                            }
+                        });
+                    }
+                })
+            })
+        })
+
+    </script>
+}

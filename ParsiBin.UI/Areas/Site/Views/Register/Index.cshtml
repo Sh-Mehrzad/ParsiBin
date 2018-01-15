@@ -1,0 +1,88 @@
+﻿@model ParsiBin.ViewModel.UserModel.RegisterModel
+
+@{
+    ViewBag.Title = "ثبت نام";
+    Layout = "~/Views/Shared/_LayoutNew.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container body-content Part2">
+        <div class="form-horizontal">
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="black">
+                        <br />
+                        کاربر گرامی از اینکه میخواهید عضو پارسی‌بین شوید بسیار خوشحالیم.
+                        <br />
+                        برای <span class="label label-info">ثبت نام</span> کافی است یک <span class="label label-warning">ایمیل معتبر</span> و رمز عبوری برای وارد شدن دوباره خود به سیستم انتخاب نمایید.
+                        <br />
+                        پس از تایید شدن اطلاعات شما، <span class="label label-success">ایمیلی حاوی لینک فعالسازی برای شما ارسال خواهد شد </span>. فقط کافی است بر روی لینک کلیک کرده و از پارسی‌بین پیام تاییدیه را دریافت کنید.
+                        <br />
+                        رمز عبور باید حداقل 6 کاراکتر و حداکثر 14 کاراکتر باشد. رمز عبور مجاز شامل اعداد و حروف انگلیسی و علائم میباشد.
+                    </p>
+                </div>                
+            </div>
+            @if (ViewBag.Message != null)
+            {     <div class="alert-danger">@ViewBag.Message</div>}
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2 black" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control text-right", @maxlength = 80, @style = "direction:ltr;" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2 black" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control text-right", @type = "password", @maxlength = 14, @style = "direction:ltr;" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2 black" for="RePassword">تکرار رمز عبور</label>
+                <div class="col-md-10">
+                    <input class="form-control text-box single-line text-right" id="RePassword" name="RePassword" type="password" value="" maxlength="14"  style = "direction:ltr;">
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Captcha, htmlAttributes: new { @class = "control-label col-md-2 black te" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Captcha, new { htmlAttributes = new { @class = "form-control text-right", @maxlength = 5, @style = "direction:ltr;" } })
+                    @Html.ValidationMessageFor(model => model.Captcha, "", new { @class = "text-danger" })
+                    <br />
+                    <a id="refresh" class="BigLink"><span class="glyphicon glyphicon-refresh"></span></a>
+                    <img alt="Captcha" id="imgcpatcha" src="@Url.Action("CaptchaImage","Register")" style="" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="تایید" class="btn btn-lg btn-success" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"><br /></div>
+}
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('#refresh').click(function () {
+                var d = new Date();
+                $("#imgcpatcha").attr("src", "/account/Register/CaptchaImage?" + d.getTime());
+
+            });
+        });
+    </script>
+}

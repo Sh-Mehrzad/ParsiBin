@@ -1,0 +1,70 @@
+﻿@model ParsiBin.ViewModel.AdminModel.ParticipantModel
+
+@{
+    ViewBag.Title = "ایجاد تیم جدید";
+}
+
+<div class="container body-content">
+    <div class="row">
+
+        @if (ViewBag.Message != null)
+        {     <div class="alert-danger">@ViewBag.Message</div>}
+        @if (ViewBag.Status == true)
+        { <div class="alert-success">اطلاعات با موفقیت ذخیره شد</div>}
+
+        @using (Html.BeginForm("Create", "Participant", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="Logo" name="upload" value="انتخاب تصویر" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SportTypeTitle, "SportTypeID", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("SportTypeID", (IEnumerable<SelectListItem>)ViewBag.SportType, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SportTypeTitle, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ParticipantTypeID, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("ParticipantTypeID", (IEnumerable<SelectListItem>)ViewBag.ParticipantType, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ParticipantTypeID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("CountryID", (IEnumerable<SelectListItem>)ViewBag.CountryID, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="ثبت" class="btn btn-success btn-sm" />
+                        @Html.ActionLink("بازگشت", "Index", null, new { @class = "btn btn-warning btn-sm" })
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

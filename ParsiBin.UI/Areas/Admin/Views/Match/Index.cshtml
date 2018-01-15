@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ParsiBin.ViewModel.AdminModel.MatchModel>
+
+@{
+    ViewBag.Title = "لیست بازی‌ها";
+}
+
+<div class="container body-content">
+    <h3>تورنومنت : @ViewBag.TourTitle</h3>
+    <h3>گروه : @ViewBag.GroupTitle</h3>
+
+    <p>
+        <a href="/Admin/Match/Create?GroupID=@Request.QueryString["GroupID"]" class="btn btn-sm btn-primary">ایجاد بازی جدید</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HomeTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwayTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MatchTime)
+            </th>
+            <th>
+                ضرایب بازی
+            </th>
+            <th>
+                وضعیت بازی
+            </th>
+
+            <th>
+                نمایش بازی
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HomeTeam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AwayTeam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MatchTime)
+                </td>
+                <td>
+                    @Html.ActionLink("ضرایب", "Index", "MatchScore", new { MatchID = item.ID }, new { @class = "btn btn-primary" })
+                </td>
+                <td>
+                    @if (item.MatchStatus == 1)
+                    {
+                        @Html.ActionLink("اتمام بازی", "MatchResult", "Match", new { MatchID = item.ID }, new { @class = "btn btn-primary" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("پایان یافته", "MatchResult", "Match", new { MatchID = item.ID }, new { @class = "btn btn-success" })
+                    }
+                </td>
+                <td>
+                    @if (item.IsEnabled == true)
+                    {
+                        <a class="btn btn-success disabled" id="@item.ID" name="MatchEnable">فعال</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" id="@item.ID" name="MatchEnable">نمایش</a>
+                    }
+                    
+                    @*@Html.ActionLink("نمایش", "EnableMatch", "Match", new { MatchID =  }, new { id = "someID" }, new { @class = "btn btn-primary" })*@
+
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+    @Html.ActionLink("Delete", "Delete", new { id = item.ID })*@
+                </td>
+                <td>@Html.ActionLink("ویرایش", "Edit/" + item.ID, new { Controller = "Match" })</td>
+            </tr>
+        }
+
+    </table>
+
+    <p> 
+        <a href="~/admin/Group/index?TournamentID=@ViewBag.TournamID" class="btn btn-warning btn-sm">بازگشت به لیست گروه‌ها</a>                
+    </p>
+
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(function () {
+                $('a[name="MatchEnable"]').click(function () {
+                    var val = this.id.split("/");
+                    var btn = $(this);
+                    $.ajax({
+                        url: '@Url.Action("EnableMatch", "Match")',
+                        type: 'POST',
+                        data: {
+                            MatchID: val[0]
+                        },
+                        success: function() {
+                            btn.addClass('disabled');
+                            btn.addClass('btn-success');
+                            btn.removeClass('btn-primary');
+                            btn.text('فعال شد');
+                        }
+                    });
+                    
+                });
+            })
+        })
+
+    </script>    
+}
